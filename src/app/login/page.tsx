@@ -6,8 +6,6 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleLogin = () => {
-    // ⚠️ В реальном проекте cookie должен ставить сервер через API (HttpOnly).
-    // Здесь — упрощённо, для примера:
     document.cookie = `token=123456; path=/;`;
     router.push("/home");
   };

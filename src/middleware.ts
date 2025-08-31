@@ -5,17 +5,16 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
   const { pathname } = req.nextUrl;
 
-  // Пути, которые доступны без авторизации
-  const publicPaths = ["/login"];
+  const publicPaths = ["/login", "/register", "/forgot-password"];
 
-  // Если пользователь не авторизован и идёт не на login → редирект
+  // Если нет токена и идём не на public → редиректим на /login
   if (!token && !publicPaths.includes(pathname)) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Если авторизован и идёт на login → редирект на home
+  // Если есть токен и идём на /login → редиректим на /
   if (token && pathname === "/login") {
-    return NextResponse.redirect(new URL("/home", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   return NextResponse.next();

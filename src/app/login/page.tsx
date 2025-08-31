@@ -18,13 +18,10 @@ export default function LoginPage() {
     }
   })
 
-  const handleLogin = () => {
+  const onSubmit: SubmitHandler<IAuthFormData> = (data) => {
+    console.log('data', data)
     document.cookie = `token=123456; path=/;`;
-    // router.push("/");
-  };
-
-  const onSubmit: SubmitHandler<IAuthFormData> = (data)=>{
-    console.log('data',data)
+    router.push("/");
   }
 
   return (
@@ -39,7 +36,7 @@ export default function LoginPage() {
           pattern: {
             // value: /^[0-9]{12}$/,
             value: validEmail,
-            message: 'Please enter a valid iin'
+            message: 'Please enter a valid email'
           }
         }}
       />

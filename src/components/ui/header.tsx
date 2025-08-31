@@ -8,6 +8,7 @@ export const Header = () => {
     <ul className="flex gap-3">
       <li><Link href='/'>Home</Link></li>
       <li><Link href='/posts'>Post</Link></li>
+      <li><Link href='/users'>User</Link></li>
     </ul>
   </div>
 }

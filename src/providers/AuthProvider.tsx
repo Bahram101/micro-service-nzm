@@ -18,7 +18,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    console.log('useEffect')
     const savedToken = localStorage.getItem("token");
     const savedUser = localStorage.getItem("user");
     if (savedToken && savedUser) {
@@ -32,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(token);
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify({ email }));
-    router.push("/home"); // после входа → /home
+    router.push("/"); 
   };
 
   const logout = () => {
@@ -42,7 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("user");
     router.push("/login");
   };
-  console.log('body')
+
   return (
     <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}

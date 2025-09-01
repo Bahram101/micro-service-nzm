@@ -10,4 +10,3 @@ export async function createUser(data: IUser) {
 export async function fetchUsers(){
   return prisma.user.findMany()
 }
-

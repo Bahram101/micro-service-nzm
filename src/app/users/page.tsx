@@ -8,8 +8,6 @@ import Loader from "@/components/ui/Loader";
 const UsersPage = () => {
   const { isLoading, users } = useGetUsers();
 
-  // if (isLoading) return <p>Loading...</p>;
-
   return (
     <div>
       <div className="flex justify-between pb-4">

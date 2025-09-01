@@ -18,6 +18,6 @@ export async function POST(req: Request) {
       password: data.password,
     },
   }
-  const user = await prisma.user.create(data);
+  const user = await prisma.user.create(obj);
   return NextResponse.json(user);
 }

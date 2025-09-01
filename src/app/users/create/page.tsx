@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { createUser } from "@/app/actions/user";
 
 export default function CreateUserPage() {
   const router = useRouter();
@@ -13,11 +14,13 @@ export default function CreateUserPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await fetch("/api/users", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, name, password, iin }),
-    });
+    // await fetch("/api/users", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ email, name, password, iin }),
+    // });
+
+    await createUser({email, name, iin, password})
 
     router.push("/users"); // 👈 после создания отправляем обратно на список
   };

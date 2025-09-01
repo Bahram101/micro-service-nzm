@@ -29,15 +29,12 @@ const UsersPage = (props: Props) => {
         <div>Users</div>
         <Link href='/users/create'><button className='bg-green-600 px-4 py-2 rounded text-white' >Create</button></Link>
       </div>
-      <div>
-        <div className=' flex-col'>
-          {
-            users?.length > 0 ? users.map(user => (
-              <div>{user.name}</div>
-            )) : null
-          }
-
-        </div>
+      <div className='flex-col'>
+        {
+          users.map((user, index) => (
+            <div key={index}>{user.name}</div>
+          ))
+        }
       </div>
     </div>
   )

@@ -10,13 +10,14 @@ export async function GET() {
 // POST /api/users
 export async function POST(req: Request) {
   const data = await req.json();
-  const user = await prisma.user.create({
+  const obj = {
     data: {
       name: data.name,
       email: data.email,
       iin: data.iin,
       password: data.password,
     },
-  });
+  }
+  const user = await prisma.user.create(data);
   return NextResponse.json(user);
 }

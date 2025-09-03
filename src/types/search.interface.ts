@@ -1,3 +1,3 @@
 export interface ISearch {
-  search: string
+  fioiin: string
 }

@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { fetchUsers } from "../actions/users";
-import { useGetUsers } from "@/hooks/users";
+import React from "react";
 import Loader from "@/components/ui/Loader";
+import { useGetUsers } from "@/hooks/users";
 
 const UsersPage = () => {
   const { isLoading, users } = useGetUsers();
@@ -22,8 +21,9 @@ const UsersPage = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          Array.isArray(users) &&
-          users.map((user, index) => <div key={index}>{user.name}</div>)
+          users?.users.map((user: any, index: number) => (
+            <div key={index}>{user.firstName}</div>
+          ))
         )}
       </div>
     </div>

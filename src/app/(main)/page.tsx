@@ -12,32 +12,29 @@ export default function MainPage() {
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<ISearch> = ({ search }) => {
-    fetch("/api/users")
+  const onSubmit: SubmitHandler<ISearch> = ({ fioiin }) => { 
+    fetch(`/api/users/by-iin/${fioiin}`)
       .then((res) => res.json())
       .then((data) =>
-        setUsers(data.users.map((u: any) => ({ name: u.firstName, id: u.id })))
+        setUsers(data)
       );
   };
 
-  const handleUserClick = (id: number) => {
-    fetch(`/api/users/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        // обновляем список пользователей: добавляем email только выбранному
-        setUsers((prev: any) => {
-          return prev.map((u: any) =>
-            u.id === id ? { ...u, email: data.email } : u
-          );
-        });
+  // const handleUserClick = (id: number) => {
+  //   fetch(`/api/users/${id}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // обновляем список пользователей: добавляем email только выбранному
+  //       setUsers((prev: any) => {
+  //         return prev.map((u: any) =>
+  //           u.id === id ? { ...u, email: data.email } : u
+  //         );
+  //       });
 
-        // если нужно хранить отдельно выбранного
-        setSelectedUser(data);
-      });
-  };
-
-  console.log("users", users);
-  console.log("selectedUser", selectedUser);
+  //       // если нужно хранить отдельно выбранного
+  //       setSelectedUser(data);
+  //     });
+  // }; 
 
   return (
     <div>
@@ -49,15 +46,15 @@ export default function MainPage() {
           handleSubmit={handleSubmit}
         />
         <ul className="mt-6">
-          {users?.map((user: any) => (
+          {/* {users?.map((user: any) => (
             <li
               key={user.id}
               className="cursor-pointer font-semibold p-2 hover:bg-gray-200"
-              onClick={() => handleUserClick(user.id)}
+              onClick={() => handleUserClick(user?.id)}
             >
               {user?.name} - {user?.email}
             </li>
-          ))}
+          ))} */}
         </ul>
       </div>
     </div>

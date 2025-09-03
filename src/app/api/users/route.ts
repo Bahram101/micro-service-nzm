@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import instance from "@/lib/axios";
 
 // GET /api/users
 export async function GET() {
   try {
-    const res = await fetch("https://dummyjson.com/users?limit=5");
-    const data = await res.json();
+    const { data } = await instance("/users"); 
     return NextResponse.json(data);
   } catch (e) {
     return NextResponse.json(
-      { error: "Failed to fetch todo" },
+      { error: "Failed to fetch users" },
       { status: 500 }
     );
   }
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
       iin: data.iin,
       password: data.password,
     },
-  }
+  };
   const user = await prisma.user.create(obj);
   return NextResponse.json(user);
 }

@@ -19,7 +19,7 @@ const SearchForm: FC<ISearchForm> = ({ control, onSubmit, handleSubmit }) => {
           className="mb-0 w-full mr-3"
           placeholder="ИИН"
           control={control}
-          name="search"
+          name="fioiin"
           rules={{
             required: "Заполните поле!",
             pattern: {

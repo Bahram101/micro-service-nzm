@@ -1,10 +1,11 @@
+import instance from "@/lib/axios";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+// GET /api/todos
 export async function GET() {
   try {
-    const res = await fetch("https://dummyjson.com/todos/random");
-    const data = await res.json();
+    const { data } = await instance.get("/todos");
     return NextResponse.json(data);
   } catch (e) {
     return NextResponse.json(

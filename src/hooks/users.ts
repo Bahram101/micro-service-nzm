@@ -1,16 +1,11 @@
-"use client";
+import { UserService } from "@/services/users.todos";
+import { useQuery } from "@tanstack/react-query";
 
-import { createUser, fetchUsers } from "@/app/actions/users";
-import { IUser } from "@/types/user.interface";
-import { useQuery, useMutation } from "@tanstack/react-query";
-
-export function useGetUsers() {
-  // const { isLoading, data: users = [] } = useQuery<IUser[], Error, string[]>({
-  const { isLoading, data: users = [] } = useQuery<IUser[]>({
-    queryKey: ["users"],
-    queryFn: () => fetchUsers(),
-    select: (data) => data,
+export const useGetUsers = () => {
+  const { data: users, isLoading } = useQuery({
+    queryKey: ["get users"],
+    queryFn: UserService.getAll,
   });
 
-  return { isLoading, users };
-}
+  return { users, isLoading };
+};

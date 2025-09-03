@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { getRandomTodo } from "../actions/todos";
+import React, { useEffect, useState } from "react"; 
 
 type Props = {};
 

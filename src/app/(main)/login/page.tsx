@@ -30,8 +30,7 @@ export default function LoginPage() {
     });
 
     const data = await res.json();
-    console.log("data", data);
-    console.log("res", res);
+
     if (res.ok) {
       setMessage("Успешный вход!");
       router.push("/users");
@@ -43,8 +42,9 @@ export default function LoginPage() {
   return (
     <div className="bg-white p-6 rounded shadow w-80 space-y-4">
       <h1 className="text-xl font-semibold text-center">Login</h1>
-      {message && <span className="text-red-400 mb-3 block" >{message}</span>}
+      {message && <span className="text-red-400 mb-3 block">{message}</span>}
       <Field<IAuthFormData>
+        className="mb-4"
         placeholder="Email"
         control={control}
         name="email"
@@ -58,6 +58,7 @@ export default function LoginPage() {
         }}
       />
       <Field<IAuthFormData>
+        className="mb-4"
         placeholder="Пароль"
         control={control}
         name="password"

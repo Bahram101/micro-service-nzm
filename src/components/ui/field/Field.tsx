@@ -1,8 +1,8 @@
-import cn from 'clsx'
-import React, { FC } from 'react'
-import { Controller } from 'react-hook-form'
+import cn from "clsx";
+import React, { FC } from "react";
+import { Controller } from "react-hook-form";
 
-import { IField } from './field.interface'
+import { IField } from "./field.interface";
 
 const Field = <T extends Record<string, any>>({
   control,
@@ -11,6 +11,7 @@ const Field = <T extends Record<string, any>>({
   className,
   ...rest
 }: IField<T>) => {
+ 
   return (
     <Controller
       control={control}
@@ -18,32 +19,31 @@ const Field = <T extends Record<string, any>>({
       rules={rules}
       render={({
         field: { value, onChange, onBlur },
-        fieldState: { error }
+        fieldState: { error },
       }) => {
-
         return (
-          <div className='mb-4'>
+          <div className={cn(className)}>
             <div
               className={cn(
-                'm-0 bg-white rounded-lg border px-2',
-                error ? 'border-red-400' : 'border-gray-300'
+                "m-0 bg-white rounded-lg border px-2",
+                error ? "border-red-400" : "border-gray-300"
               )}
             >
               <input
-                className='w-full p-2 outline-none'
-                value={(value || '').toString()}
+                className="w-full p-2 outline-none"
+                value={(value || "").toString()}
                 onChange={onChange}
                 onBlur={onBlur}
-                autoCapitalize='none'
+                autoCapitalize="none"
                 {...rest}
               />
             </div>
-            {error && <small className=' text-red-400'>{error.message}</small>}
+            {error && <small className=" text-red-400">{error.message}</small>}
           </div>
-        )
+        );
       }}
     />
-  )
-}
+  );
+};
 
-export default Field
+export default Field;

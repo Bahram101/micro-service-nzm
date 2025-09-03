@@ -3,10 +3,17 @@ import { prisma } from "@/lib/prisma";
 
 // GET /api/users
 export async function GET() {
-  const users = await prisma.user.findMany();
-  return NextResponse.json(users);
+  try {
+    const res = await fetch("https://dummyjson.com/users?limit=5");
+    const data = await res.json();
+    return NextResponse.json(data);
+  } catch (e) {
+    return NextResponse.json(
+      { error: "Failed to fetch todo" },
+      { status: 500 }
+    );
+  }
 }
-
 // POST /api/users
 export async function POST(req: Request) {
   const data = await req.json();

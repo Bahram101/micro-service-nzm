@@ -1,14 +1,20 @@
+// "use client";
 import axios from "axios";
 import Cookies from "js-cookie";
+import https from "https"
 
 const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL_PROD,
+  // withCredentials: true,
+  httpsAgent: new https.Agent({
+    rejectUnauthorized: false, // ⚠️ отключает проверку сертификата
+  }),
 });
 
-console.log('NEEEEEEEEEEEEEEEEEEEEE', process.env.NEXT_PUBLIC_API_URL)
-
 // instance.interceptors.request.use((config) => {
-//   config.headers.Authorization = Cookies.get("token");
+//   const token = Cookies.get("token");
+//   console.log("TOKENN", token);
+//   if (token) config.headers.Authorization = `Bearer ${token}`;
 //   return config;
 // });
 

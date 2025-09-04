@@ -16,7 +16,7 @@ const SearchForm: FC<ISearchForm> = ({ control, onSubmit, handleSubmit }) => {
     <div >
       <form onClick={handleSubmit(onSubmit)} className="flex items-start ">
         <Field<ISearch>
-          className="mb-0 w-full mr-3"
+          className="mb-0 w-full "
           placeholder="ИИН"
           control={control}
           name="fioiin"
@@ -30,8 +30,8 @@ const SearchForm: FC<ISearchForm> = ({ control, onSubmit, handleSubmit }) => {
         />
         <button type='submit'>
           <IoSearchOutline
-            size={40}
-            className="rounded-lg cursor-pointer border border-gray-400 p-2"
+            size={42}
+            className="rounded-lg cursor-pointer border border-gray-300 p-2"
           />
         </button>
       </form>

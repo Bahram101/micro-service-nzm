@@ -7,7 +7,7 @@ interface ILoader {
 
 const Loader: FC<ILoader> = ({ color }) => {
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center mt-2">
       <ClipLoader
         className=""
         color={color}

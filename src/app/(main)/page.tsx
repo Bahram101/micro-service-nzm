@@ -1,42 +1,59 @@
 "use client";
+import Loader from "@/components/ui/Loader";
 import SearchForm from "@/components/ui/SearchForm";
 import { ISearch } from "@/types/search.interface";
-import { IUser } from "@/types/user.interface";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 export default function MainPage() {
-  const [users, setUsers] = useState<[]>([]);
-  const [selectedUser, setSelectedUser] = useState<[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingPhone, setIsLoadingPhone] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [user, setUser] = useState<{
+    id: string;
+    lastName: string;
+    firstName: string;
+  }>({
+    id: "",
+    lastName: "",
+    firstName: "",
+  });
+
   const { control, handleSubmit } = useForm<ISearch>({
     mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<ISearch> = ({ fioiin }) => {
-    console.log("iin", fioiin);
+    setIsLoading(true);
     fetch(`/api/users/by-iin/${fioiin}`, {
       method: "GET",
       credentials: "include",
     })
       .then((res) => res.json())
-      .then((data) => console.log('ddddd', data));
+      .then((data) => {
+        setIsLoading(false);
+        setUser({
+          id: data[0]?.MainAddress?.personID,
+          lastName: data[0].lastName,
+          firstName: data[0].firstName,
+        });
+      });
   };
 
-  // const handleUserClick = (id: number) => {
-  //   fetch(`/api/users/${id}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       // обновляем список пользователей: добавляем email только выбранному
-  //       setUsers((prev: any) => {
-  //         return prev.map((u: any) =>
-  //           u.id === id ? { ...u, email: data.email } : u
-  //         );
-  //       });
+  const handleUserClick = (id: string) => {
+    setIsLoadingPhone(true)
+    fetch(`/api/users/${id}`, {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setIsLoadingPhone(false)
+        setPhone(data[0].PhoneNumber);
+      });
+  };
 
-  //       // если нужно хранить отдельно выбранного
-  //       setSelectedUser(data);
-  //     });
-  // };
+  console.log("user", user);
 
   return (
     <div>
@@ -47,17 +64,22 @@ export default function MainPage() {
           onSubmit={onSubmit}
           handleSubmit={handleSubmit}
         />
-        <ul className="mt-6">
-          {/* {users?.map((user: any) => (
-            <li
-              key={user.id}
-              className="cursor-pointer font-semibold p-2 hover:bg-gray-200"
-              onClick={() => handleUserClick(user?.id)}
-            >
-              {user?.name} - {user?.email}
-            </li>
-          ))} */}
-        </ul>
+
+        {isLoading ? (
+          <Loader />
+        ) : (
+          user.lastName && (
+            <div>
+              <div
+                className="cursor-pointer p-2 mt-3 hover:bg-gray-200 mb-2"
+                onClick={() => handleUserClick(user.id)}
+              >
+                {user?.lastName} {user?.firstName}
+              </div>
+              {isLoadingPhone ? <Loader /> : <div>{phone}</div>}
+            </div>
+          )
+        )}
       </div>
     </div>
   );

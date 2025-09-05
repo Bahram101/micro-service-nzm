@@ -1,24 +1,30 @@
-import { NextResponse } from "next/server";
+import instance from "@/lib/axios";
+import { NextRequest, NextResponse } from "next/server";
 
-interface Params {
-  params: { id: string };
-}
-
+// GET /api/users/[id]
 export async function GET(
-  req: Request,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id } = await params; 
+  const cacheBuster = Date.now();
+  const token = req.cookies.get("token")?.value;
+
+  if (!token) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   try {
-    const res = await fetch(`https://dummyjson.com/users/${id}`);
-    const user = await res.json();
-
-    return NextResponse.json(user);
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to fetch user" },
-      { status: 500 }
+    const res = await instance.get(
+      `/person/${id}/getPhonesForSite?_=${cacheBuster}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     );
+
+    return NextResponse.json(res.data);
+  } catch (e:any) {
+    console.error("Upstream API error:", e.response?.status, e.response?.data);
+    return NextResponse.json({ error: "Failed" }, { status: 500 });
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 import Loader from "@/components/ui/Loader";
 import SearchForm from "@/components/ui/SearchForm";
+import clientInstance from "@/lib/axios.client";
 import { ISearch } from "@/types/search.interface";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -25,35 +26,31 @@ export default function MainPage() {
 
   const onSubmit: SubmitHandler<ISearch> = ({ fioiin }) => {
     setIsLoading(true);
-    fetch(`/api/users/by-iin/${fioiin}`, {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setIsLoading(false);
-        setUser({
-          id: data[0]?.MainAddress?.personID,
-          lastName: data[0].lastName,
-          firstName: data[0].firstName,
-        });
+    clientInstance.get(`/api/users/by-iin/${fioiin}`).then((res) => {
+      const data = res.data;
+      setIsLoading(false);
+      setUser({
+        id: data[0]?.MainAddress?.personID,
+        lastName: data[0]?.lastName,
+        firstName: data[0]?.firstName,
       });
+    });
   };
 
   const handleUserClick = (id: string) => {
-    setIsLoadingPhone(true)
+    setIsLoadingPhone(true);
     fetch(`/api/users/${id}`, {
       method: "GET",
       credentials: "include",
     })
       .then((res) => res.json())
       .then((data) => {
-        setIsLoadingPhone(false)
+        setIsLoadingPhone(false);
         setPhone(data[0].PhoneNumber);
       });
   };
 
-  console.log("user", user);
+  // console.log("user", user);
 
   return (
     <div>

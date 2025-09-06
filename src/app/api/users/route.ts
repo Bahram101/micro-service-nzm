@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import instance from "@/lib/axios";
+import instance from "@/lib/axios.server";
 
 // GET /api/users
 export async function GET() {

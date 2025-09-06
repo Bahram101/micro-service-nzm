@@ -1,4 +1,4 @@
-import instance from "@/lib/axios";
+import serverInstance from "@/lib/axios.server";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET /api/users/by-iin/[fioiin]
@@ -15,7 +15,7 @@ export async function GET(
   }
 
   try {
-    const res = await instance.get(
+    const res = await serverInstance.get(
       `/person?fioiin=${fioiin}&_=${cacheBuster}`,
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -23,8 +23,11 @@ export async function GET(
     );
 
     return NextResponse.json(res.data);
-  } catch (e:any) {
-    console.error("Upstream API error:", e.response?.status, e.response?.data);
+  } catch (e: any) {
+    if (e.response?.status === 401) {
+      console.error("Upstream API error:", e);
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     return NextResponse.json({ error: "Failed" }, { status: 500 });
   }
 }

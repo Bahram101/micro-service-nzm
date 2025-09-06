@@ -30,7 +30,6 @@ export default function LoginPage() {
       // secure: true,
       sameSite: "strict",
     });
-    // localStorage.setItem("tkn", tkn);
   }, []);
 
   const onSubmit: SubmitHandler<IAuthFormData> = async ({
@@ -56,11 +55,6 @@ export default function LoginPage() {
         sameSite: "strict",
       });
       Cookies.remove("tkn");
-
-      localStorage.getItem("tkn");
-
-      console.log("data", data);
-      console.log("res", res);
 
       if (res.ok) {
         router.push("/");

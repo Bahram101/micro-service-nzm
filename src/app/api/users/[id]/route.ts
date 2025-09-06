@@ -1,4 +1,4 @@
-import instance from "@/lib/axios";
+import serverInstance from "@/lib/axios.server";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET /api/users/[id]
@@ -15,7 +15,7 @@ export async function GET(
   }
 
   try {
-    const res = await instance.get(
+    const res = await serverInstance.get(
       `/person/${id}/getPhonesForSite?_=${cacheBuster}`,
       {
         headers: { Authorization: `Bearer ${token}` },

@@ -17,7 +17,7 @@ export const Header = () => {
         <li>
           <Link href="/">Home</Link>
         </li>
-        <li>
+        {/* <li>
           <Link href="/posts">Post</Link>
         </li>
         <li>
@@ -25,7 +25,7 @@ export const Header = () => {
         </li>
         <li>
           <Link href="/todos">Todos</Link>
-        </li>
+        </li> */}
         <li>
           {/* кнопка logout */}
           <button onClick={onLogout} className="hover:underline cursor-pointer">

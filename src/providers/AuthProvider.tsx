@@ -6,30 +6,15 @@ import Cookies from "js-cookie";
 
 type AuthContextType = {
   logout: () => void;
-};
+  user: { email: string } | null;};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
 
   const router = useRouter();
+  const [user, setUser] = useState<{ email: string } | null>({email:'test@test.r'});
 
-  // useEffect(() => {
-  //   const savedToken = localStorage.getItem("token");
-  //   const savedUser = localStorage.getItem("user");
-  //   if (savedToken && savedUser) {
-  //     setToken(savedToken);
-  //     setUser(JSON.parse(savedUser));
-  //   }
-  // }, []);
-
-  // const login = (email: string, token: string) => {
-  //   setUser({ email });
-  //   setToken(token);
-  //   localStorage.setItem("token", token);
-  //   localStorage.setItem("user", JSON.stringify({ email }));
-  //   router.push("/");
-  // };
 
   const logout = () => {
     Cookies.remove("token", { path: "/" });
@@ -37,7 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ logout }}>
+    <AuthContext.Provider value={{ logout, user }}>
       {children}
     </AuthContext.Provider>
   );

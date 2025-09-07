@@ -46,14 +46,14 @@ export default function LoginPage() {
 
       const data = await res.json();
       setIsLoading(false);
-      const token = Cookies.get("tkn");
 
+      const token = Cookies.get("tkn");
       Cookies.set("token", token, {
         expires: 1,
-        // secure: true,
         sameSite: "strict",
       });
-      Cookies.remove("tkn");
+
+      // Cookies.remove("tkn");
 
       if (res.ok) {
         router.push("/");

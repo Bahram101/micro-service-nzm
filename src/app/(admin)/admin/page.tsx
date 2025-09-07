@@ -4,7 +4,9 @@ type Props = {}
 
 const AdminPage = (props: Props) => {
   return (
-    <div>AdminPagee</div>
+    <div>
+      Admin main
+    </div>
   )
 }
 

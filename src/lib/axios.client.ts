@@ -18,7 +18,7 @@ clientInstance.interceptors.response.use(
     if (error.response?.status === 401) {
       Cookies.remove("token", { path: "/" });
       // if (typeof window !== "undefined") {
-      location.href = "/login";
+      location.href = "/auth/login";
       // }
     }
     return Promise.reject(error);

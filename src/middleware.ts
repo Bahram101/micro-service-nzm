@@ -5,17 +5,13 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
   // console.log("TOKEN FROM MIDDLE", token);
   const { pathname } = req.nextUrl;
-  const publicPaths = ["/login", "/register", "/forgot-password"];
-
-  // if (!token) {
-  //   return NextResponse.redirect(new URL("/login", req.url));
-  // }
+  const publicPaths = ["/auth/login", "/auth/register", "/auth/forgot-password"];
 
   if (!token && !publicPaths.includes(pathname)) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
-  if (token && pathname === "/login") { 
+  if (token && pathname === "/auth/login") { 
     return NextResponse.redirect(new URL("/", req.url));
   }
 

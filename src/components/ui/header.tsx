@@ -7,7 +7,7 @@ export const Header = () => {
   const router = useRouter();
   const onLogout = () => {
     Cookies.remove("token", { path: "/" });
-    router.push("/login");
+    router.push("/auth/login");
   };
 
   return (
@@ -22,10 +22,10 @@ export const Header = () => {
         </li>
         <li>
           <Link href="/users">User</Link>
-        </li>
+        </li>*/}
         <li>
-          <Link href="/todos">Todos</Link>
-        </li> */}
+          <Link href="/admin">Админ</Link>
+        </li> 
         <li>
           {/* кнопка logout */}
           <button onClick={onLogout} className="hover:underline cursor-pointer">

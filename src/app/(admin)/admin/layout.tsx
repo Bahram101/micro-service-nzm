@@ -1,3 +1,9 @@
+import { AuthProvider } from "@/providers/AuthProvider";
+import Footer from "./components/ui/footer";
+import Header from "./components/ui/header";
+import Sidebar from "./components/ui/sidebar";
+import "@/app/(main)/globals.css";
+
 export default function AdminLayout({
   children,
 }: {
@@ -6,23 +12,18 @@ export default function AdminLayout({
   return (
     <html lang="en">
       <body>
-        <div className="flex min-h-screen">
-          <aside className="w-64 bg-gray-900 text-white p-4">
-            <h2 className="text-xl font-bold">Admin Panel</h2>
-            <nav className="mt-4 space-y-2">
-              <a href="/admin" className="block hover:underline">
-                Dashboard
-              </a>
-              <a href="/admin/users" className="block hover:underline">
-                Users
-              </a>
-              <a href="/admin/settings" className="block hover:underline">
-                Settings
-              </a>
-            </nav>
-          </aside>
-          <main className="flex-1 p-6 bg-gray-100">{children}</main>
-        </div>
+        <AuthProvider>
+          <div className="flex min-h-screen">
+            <Sidebar />
+            <div className="flex flex-1 flex-col">
+              <Header />
+              <main className="flex flex-1 p-4 ">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

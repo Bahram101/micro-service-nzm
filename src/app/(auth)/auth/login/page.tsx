@@ -48,7 +48,7 @@ export default function LoginPage() {
       setIsLoading(false);
 
       if (res.ok) {
-        const token = Cookies.get("tkn");
+        const token = Cookies.get("tkn") ?? "";
         Cookies.set("token", token, {
           expires: 1,
           sameSite: "strict",

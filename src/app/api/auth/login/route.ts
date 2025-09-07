@@ -8,7 +8,15 @@ export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({
+      where: { email }, 
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+      },
+    });
     if (!user) {
       return NextResponse.json(
         { error: "Invalid credentials" },
@@ -20,8 +28,17 @@ export async function POST(req: Request) {
     //   expiresIn: "1h",
     // });
 
-    const res = NextResponse.json({ message: "Login successful" });
+    console.log('user', user)
+
+    const res = NextResponse.json({
+      message: "Login successful", user: {
+        // id: user.id,
+        // email: user.email,
+        role: user.role
+      }
+    });
     // res.cookies.set("token", token, { httpOnly: true, secure: true });
+
     return res;
   } catch (error) {
     return NextResponse.json({ error: "Login failed" }, { status: 500 });

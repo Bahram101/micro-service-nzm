@@ -1,14 +1,9 @@
 "use client";
 import Link from "next/link";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { useAuth } from "@/providers/AuthProvider";
 
 export const Header = () => {
-  const router = useRouter();
-  const onLogout = () => {
-    Cookies.remove("token", { path: "/" });
-    router.push("/auth/login");
-  };
+  const { user, logout } = useAuth()
 
   return (
     <div className="px-4 py-4 border-b border-zinc-200 justify-between flex">
@@ -17,18 +12,13 @@ export const Header = () => {
         <li>
           <Link href="/">Home</Link>
         </li>
-        {/* <li>
-          <Link href="/posts">Post</Link>
-        </li>
+        {user && user.role === "ADMIN" && (
+          <li>
+            <Link href="/admin">Админ</Link>
+          </li>
+        )}
         <li>
-          <Link href="/users">User</Link>
-        </li>*/}
-        <li>
-          <Link href="/admin">Админ</Link>
-        </li> 
-        <li>
-          {/* кнопка logout */}
-          <button onClick={onLogout} className="hover:underline cursor-pointer">
+          <button onClick={logout} className="hover:underline cursor-pointer">
             Выйти
           </button>
         </li>

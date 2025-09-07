@@ -1,28 +1,44 @@
 "use client"
 import Field from '@/components/ui/field/Field'
 import { useAuth } from '@/providers/AuthProvider'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Cookies from "js-cookie";
+import { useRouter } from 'next/navigation'
+import Loader from '@/components/ui/Loader'
 
 type FormValue = {
   ttt: string;
 };
 
 const AdminPage = () => {
-  const { handleSubmit, control, reset } = useForm<FormValue>({
+  const { user } = useAuth();
+  const router = useRouter();
+
+  const { handleSubmit, control } = useForm<FormValue>({
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<FormValue> = ({ttt}: FormValue) => {
-    Cookies.remove("token");
+  useEffect(() => {
+    if (user && user.role !== "ADMIN") {
+      router.push("/");
+    }
+  }, [user, router]);
 
+  const onSubmit: SubmitHandler<FormValue> = ({ ttt }: FormValue) => {
+    Cookies.remove("token");
     Cookies.set("token", ttt, {
-      // expires: 1, // 1 day
       path: '/',
       sameSite: "strict",
     });
+  }
 
+  if (!user) {
+    return <Loader />;
+  }
+
+  if (user.role !== "ADMIN") {
+    return null;
   }
 
   return (

@@ -1,4 +1,5 @@
-import { AuthProvider } from "@/providers/AuthProvider";
+"use client"
+import { AuthProvider, useAuth } from "@/providers/AuthProvider";
 import Footer from "./components/ui/footer";
 import Header from "./components/ui/header";
 import Sidebar from "./components/ui/sidebar";
@@ -9,6 +10,9 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+
+
   return (
     <html lang="en">
       <body>

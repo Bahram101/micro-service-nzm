@@ -17,6 +17,7 @@ model User {
   email    String @unique
   iin      String?
   password String
+  role     String @default("USER")
 
   @@map("user")
 }

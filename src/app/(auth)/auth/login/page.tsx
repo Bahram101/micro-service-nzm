@@ -16,8 +16,8 @@ export default function LoginPage() {
   const { handleSubmit, control, reset } = useForm<IAuthFormData>({
     mode: "onChange",
     defaultValues: {
-      email: "test@test.r",
-      password: "test",
+      // email: "test@test.r",
+      // password: "test",
     },
   });
 
@@ -47,21 +47,21 @@ export default function LoginPage() {
       const data = await res.json();
       setIsLoading(false);
 
-      const token = Cookies.get("tkn");
-      Cookies.set("token", token, {
-        expires: 1,
-        sameSite: "strict",
-      });
-
-      // Cookies.remove("tkn");
-
       if (res.ok) {
+        const token = Cookies.get("tkn");
+        Cookies.set("token", token, {
+          expires: 1,
+          sameSite: "strict",
+        });
+        Cookies.remove("tkn");
+        localStorage.setItem('user',JSON.stringify(data.user));
         router.push("/");
       } else {
         setMessage(data.error || "Ошибка входа");
       }
     } catch (e) {
       setIsLoading(false);
+      setMessage("Что-то пошло не так");
     }
   };
 
@@ -77,7 +77,6 @@ export default function LoginPage() {
         rules={{
           required: "email is required!",
           pattern: {
-            // value: /^[0-9]{12}$/,
             value: validEmail,
             message: "Please enter a valid email",
           },
@@ -88,6 +87,7 @@ export default function LoginPage() {
         placeholder="Пароль"
         control={control}
         name="password"
+        type='password'
         rules={{
           required: "Password is required!",
           minLength: {

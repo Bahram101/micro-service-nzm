@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get("token")?.value;
-  // console.log("TOKEN FROM MIDDLE", token);
+  const token = req.cookies.get("token")?.value; 
   const { pathname } = req.nextUrl;
   const publicPaths = ["/auth/login", "/auth/register", "/auth/forgot-password"];
 
@@ -14,6 +13,21 @@ export function middleware(req: NextRequest) {
   if (token && pathname === "/auth/login") { 
     return NextResponse.redirect(new URL("/", req.url));
   }
+
+   // 🔹 Если пытается попасть в /admin
+  // if (pathname.startsWith("/admin")) {
+
+  //   try {
+  //     // const decoded = jwt.verify(token, JWT_SECRET) as { role?: string };
+
+  //     if (decoded.role !== "ADMIN") { 
+  //       return NextResponse.redirect(new URL("/", req.url));
+  //     }
+  //   } catch {
+  //     // Если токен невалидный → редирект на логин
+  //     // return NextResponse.redirect(new URL("/auth/login", req.url));
+  //   }
+  // }
 
   return NextResponse.next();
 }

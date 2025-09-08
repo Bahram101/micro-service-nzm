@@ -21,7 +21,7 @@ const AdminPage = () => {
 
   useEffect(() => {
     if (user && user.role !== "ADMIN") {
-      router.push("/");
+      router.push("/"); 
     }
   }, [user, router]);
 
@@ -31,6 +31,7 @@ const AdminPage = () => {
       path: '/',
       sameSite: "strict",
     });
+    router.push('/');
   }
 
   if (!user) {

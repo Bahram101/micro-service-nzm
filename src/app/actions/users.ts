@@ -1,9 +1,9 @@
 "use server"; // обязательно
 
 import { prisma } from "@/lib/prisma";
-import { IUser } from "@/types/user.interface";
+import { IUser, IUserCreate } from "@/types/user.interface";
 
-export async function createUser(data: IUser) {
+export async function createUser(data: IUserCreate) {
   return prisma.user.create({ data });
 }
 

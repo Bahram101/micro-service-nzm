@@ -7,3 +7,5 @@ export interface IUser {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type IUserCreate = Omit<IUser, "id" | "createdAt" | "updatedAt">;

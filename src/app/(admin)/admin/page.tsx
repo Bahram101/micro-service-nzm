@@ -44,7 +44,7 @@ const AdminPage = () => {
 
   return (
     <div className='flex w-full'>
-      <form onSubmit={handleSubmit(onSubmit)} className='flex w-2/3 items-start'>
+      <form onSubmit={handleSubmit(onSubmit)} className='flex w-full md:w-2/3 items-start'>
         <Field<FormValue>
           className="mb-4 w-full mr-2"
           placeholder="Заполните поле"

@@ -54,7 +54,7 @@ export default function MainPage() {
 
   return (
     <div>
-      <div className="w-1/3 mb-0">
+      <div className="w-full md:w-2/3 lg:w-1/3 mb-0">
         <h3 className="text-xl mb-3 mt-4">Поиск</h3>
         <SearchForm
           control={control}

@@ -1,5 +1,10 @@
 import serverInstance from "@/lib/axios.server";
 import { NextRequest, NextResponse } from "next/server";
+// Настройки роута:
+export const runtime = "nodejs";                 // обязательно для axios (не edge)
+export const dynamic = "force-dynamic";          // запретить пререндер
+export const revalidate = 0;                     // всегда fresh
+export const preferredRegion = ["fra1", "cdg1", "hnd1", "sin1"]; // гео-регионы
 
 // GET /api/users/by-iin/[fioiin]
 export async function GET(

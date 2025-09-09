@@ -18,7 +18,7 @@ export const Header = () => {
           </li>
         )}
         <li>
-          <button onClick={logout} className="hover:underline cursor-pointer">
+          <button onClick={logout} className=" cursor-pointer">
             Выйти
           </button>
         </li>

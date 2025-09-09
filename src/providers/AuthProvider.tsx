@@ -30,7 +30,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     Cookies.remove("token", { path: "/" });
     localStorage.removeItem("user");
-    router.push('/')
+    router.push('/auth/login')
   };
 
   const handleSetUser = (u: User | null) => {

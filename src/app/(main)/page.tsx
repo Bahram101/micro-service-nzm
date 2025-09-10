@@ -66,12 +66,12 @@ export default function MainPage() {
           user.lastName && (
             <div>
               <div
-                className="cursor-pointer p-2 mt-3 hover:bg-gray-200 mb-2"
+                className="cursor-pointer p-2 mt-3 hover:bg-gray-200 mb-2 font-semibold"
                 onClick={() => handleUserClick(user.id)}
               >
                 {user?.lastName} {user?.firstName}
               </div>
-              {isLoadingPhone ? <Loader /> : <div>{phone}</div>}
+              {isLoadingPhone ? <Loader /> : <div className="font-semibold">{phone}</div>}
             </div>
           )
         )}

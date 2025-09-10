@@ -33,7 +33,7 @@ export async function GET(
       // console.error("Upstream API error:", e);
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    
+
     return NextResponse.json({ error: "Failed" }, { status: 500 });
     // console.error("Upstream network error:", {
     //   code: e?.code,
@@ -42,13 +42,14 @@ export async function GET(
     //   name: e?.name,
     //   toJSON: typeof e?.toJSON === "function" ? e.toJSON() : undefined,
     // });
-    return NextResponse.json(
-      {
-        error: "UPSTREAM_NETWORK_ERROR",
-        code: e?.code,
-        message: e?.message,
-      },
-      { status: 502 }
-    );
+
+    // return NextResponse.json(
+    //   {
+    //     error: "UPSTREAM_NETWORK_ERROR",
+    //     code: e?.code,
+    //     message: e?.message,
+    //   },
+    //   { status: 502 }
+    // );
   }
 }

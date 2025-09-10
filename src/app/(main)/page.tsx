@@ -50,8 +50,6 @@ export default function MainPage() {
       });
   };
 
-  // console.log("user", user);
-
   return (
     <div>
       <div className="w-full md:w-2/3 lg:w-1/3 mb-0">

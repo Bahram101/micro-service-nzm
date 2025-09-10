@@ -9,17 +9,11 @@ const clientInstance = axios.create({
 });
 
 clientInstance.interceptors.response.use(
-  (res) => {
-    console.log('resresres',res)
-    return res
-  },
+  (res) => res,
   (error) => {
-    console.log("errrrrrrrrrrrrrr", error);
     if (error.response?.status === 401) {
       Cookies.remove("token", { path: "/" });
-      // if (typeof window !== "undefined") {
       location.href = "/auth/login";
-      // }
     }
     return Promise.reject(error);
   }

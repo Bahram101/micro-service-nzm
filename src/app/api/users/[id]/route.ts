@@ -24,7 +24,6 @@ export async function GET(
 
     return NextResponse.json(res.data);
   } catch (e:any) {
-    console.error("Upstream API error:", e.response?.status, e.response?.data);
     return NextResponse.json({ error: "Failed" }, { status: 500 });
   }
 }

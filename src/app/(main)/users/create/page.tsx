@@ -23,8 +23,6 @@ export default function CreateUserPage() {
     router.push("/users"); 
   };
 
-  console.log('create page')
-
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded border border-zinc-200">
       <h1 className="text-xl font-bold mb-4">Create User</h1>

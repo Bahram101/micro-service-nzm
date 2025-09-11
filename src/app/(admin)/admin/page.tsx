@@ -1,11 +1,10 @@
-"use client"
-import Field from '@/components/ui/field/Field'
-import { useAuth } from '@/providers/AuthProvider'
-import React, { useEffect } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import Cookies from "js-cookie";
-import { useRouter } from 'next/navigation'
-import Loader from '@/components/ui/Loader'
+"use client";
+import Field from "@/components/ui/field/Field";
+import { useAuth } from "@/providers/AuthProvider";
+import React, { useEffect } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import Loader from "@/components/ui/Loader";
 
 type FormValue = {
   ttt: string;
@@ -21,18 +20,19 @@ const AdminPage = () => {
 
   useEffect(() => {
     if (user && user.role !== "ADMIN") {
-      router.push("/"); 
+      router.push("/");
     }
   }, [user, router]);
 
-  const onSubmit: SubmitHandler<FormValue> = ({ ttt }: FormValue) => {
-    Cookies.remove("token");
-    Cookies.set("token", ttt, {
-      path: '/',
-      sameSite: "strict",
+  const onSubmit: SubmitHandler<FormValue> = async ({ ttt }: FormValue) => {
+    await fetch("/api/admin/set-token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ttt }),
+      credentials: "include",
     });
     router.push('/');
-  }
+  };
 
   if (!user) {
     return <Loader />;
@@ -43,8 +43,11 @@ const AdminPage = () => {
   }
 
   return (
-    <div className='flex w-full'>
-      <form onSubmit={handleSubmit(onSubmit)} className='flex w-full md:w-2/3 items-start'>
+    <div className="flex w-full">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex w-full md:w-2/3 items-start"
+      >
         <Field<FormValue>
           className="mb-4 w-full mr-2"
           placeholder="Заполните поле"
@@ -52,14 +55,14 @@ const AdminPage = () => {
           name="ttt"
         />
         <button
-          type='submit'
+          type="submit"
           className=" bg-blue-500 text-white py-2 rounded-lg cursor-pointer px-2"
         >
           Сохранить
         </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default AdminPage
+export default AdminPage;

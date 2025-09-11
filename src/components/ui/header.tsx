@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
 import { useAuth } from "@/providers/AuthProvider";
+import { logout } from "@/lib/auth.helper";
 
 export const Header = () => {
-  const { user, logout } = useAuth()
+  const { user  } = useAuth()
 
   return (
     <div className="px-4 py-4 border-b border-zinc-200 justify-between flex">

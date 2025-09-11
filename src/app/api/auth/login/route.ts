@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
+//api/auth/login
 export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
@@ -12,28 +13,29 @@ export async function POST(req: Request) {
       where: { email },
     });
 
-    if (!user) {
+    if (!user || password !== user.password) {
       return NextResponse.json(
         { error: "Invalid credentials" },
         { status: 401 }
       );
     }
 
-    // const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, {
-    //   expiresIn: "1h",
-    // });
+    const token = "qwertu";
 
-    const res = NextResponse.json({
+    const response = NextResponse.json({
       message: "Login successful",
-      user: {
-        // id: user.id,
-        // email: user.email,
-        role: user.role,
-      },
+      user: { id: user.id, email: user.email, role: user.role },
     });
-    // res.cookies.set("token", token, { httpOnly: true, secure: true });
 
-    return res;
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      path: "/",
+      // maxAge: 60 * 60,
+    });
+
+    return response;
   } catch (error) {
     return NextResponse.json({ error: "Login failed" }, { status: 500 });
   }

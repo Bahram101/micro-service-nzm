@@ -14,10 +14,12 @@ export default function MainPage() {
     id: string;
     lastName: string;
     firstName: string;
+    address: string;
   }>({
     id: "",
     lastName: "",
     firstName: "",
+    address: "",
   });
 
   const { control, handleSubmit } = useForm<ISearch>({
@@ -25,6 +27,7 @@ export default function MainPage() {
   });
 
   const onSubmit: SubmitHandler<ISearch> = ({ fioiin }) => {
+    setPhone("");
     setIsLoading(true);
     clientInstance.get(`/api/users/by-iin/${fioiin}`).then((res) => {
       const data = res.data;
@@ -33,6 +36,7 @@ export default function MainPage() {
         id: data[0]?.MainAddress?.personID,
         lastName: data[0]?.lastName,
         firstName: data[0]?.firstName,
+        address: data[0]?.MainAddress?.addressString || "",
       });
     });
   };
@@ -46,7 +50,9 @@ export default function MainPage() {
       .then((res) => res.json())
       .then((data) => {
         setIsLoadingPhone(false);
-        setPhone(data[0].PhoneNumber);
+        if (data[0]?.PhoneNumber !== null) {
+          setPhone(data[0]?.PhoneNumber);
+        }
       });
   };
 
@@ -64,14 +70,27 @@ export default function MainPage() {
           <Loader />
         ) : (
           user.lastName && (
-            <div>
+            <div className="mt-6">
               <div
-                className="cursor-pointer p-2 mt-3 hover:bg-gray-200 mb-2 font-semibold"
+                className="cursor-pointer flex-col mt-3 hover:bg-gray-200  "
                 onClick={() => handleUserClick(user.id)}
               >
-                {user?.lastName} {user?.firstName}
+                <div className="flex mb-3">
+                  <div>Имя: </div>
+                  <div className="font-bold pl-6">
+                    {user?.lastName} {user?.firstName}
+                  </div>
+                </div>
+                <div className="flex gap-2 ">
+                  <div>Адрес:</div>
+                  <div className="font-bold">{user?.address}</div>
+                </div>
               </div>
-              {isLoadingPhone ? <Loader /> : <div className="font-semibold">{phone}</div>}
+              {isLoadingPhone ? (
+                <Loader />
+              ) : (
+                <div className="pl-14 pt-3 font-bold">{phone}</div>
+              )}
             </div>
           )
         )}

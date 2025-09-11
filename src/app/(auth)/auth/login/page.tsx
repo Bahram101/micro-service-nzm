@@ -5,30 +5,20 @@ import { IAuthFormData } from "@/types/auth.interface";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { validEmail } from "./email.regex";
-import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import { useState } from "react";
 import Loader from "@/components/ui/Loader";
 
 export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const { handleSubmit, control, reset } = useForm<IAuthFormData>({
+  const { handleSubmit, control } = useForm<IAuthFormData>({
     mode: "onChange",
     defaultValues: {
-      // email: "test@test.r",
-      // password: "test",
+      email: "nizam9119@mail.ru",
+      password: "Nizam919191",
     },
   });
-
-  useEffect(() => {
-    const tkn = "qwerty";
-
-    Cookies.set("tkn", tkn, {
-      expires: 1, // 1 day
-      sameSite: "strict",
-    });
-  }, []);
 
   const onSubmit: SubmitHandler<IAuthFormData> = async ({
     email,
@@ -47,12 +37,6 @@ export default function LoginPage() {
       setIsLoading(false);
 
       if (res.ok) {
-        const token = Cookies.get("tkn") ?? "";
-        Cookies.set("token", token, {
-          expires: 1,
-          sameSite: "strict",
-        });
-        Cookies.remove("tkn");
         localStorage.setItem("user", JSON.stringify(data.user));
         router.push("/");
       } else {

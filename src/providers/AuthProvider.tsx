@@ -1,8 +1,13 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 
 type User = {
   role?: string;
@@ -11,7 +16,7 @@ type User = {
 type AuthContextType = {
   user: User | null;
   setUser: (user: User | null) => void;
-  logout: () => void;
+  // logout: () => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,12 +32,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const logout = () => {
-    Cookies.remove("token", { path: "/" });
-    localStorage.removeItem("user");
-    router.push('/auth/login')
-  };
-
   const handleSetUser = (u: User | null) => {
     setUser(u);
     if (u) {
@@ -43,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser: handleSetUser, logout }}>
+    <AuthContext.Provider value={{ user, setUser: handleSetUser }}>
       {children}
     </AuthContext.Provider>
   );

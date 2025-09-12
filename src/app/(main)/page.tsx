@@ -9,7 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 export default function MainPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingPhone, setIsLoadingPhone] = useState(false);
-  const [phone, setPhone] = useState("");
+  const [phones, setPhones] = useState("");
   const [user, setUser] = useState<{
     id: string;
     lastName: string;
@@ -24,13 +24,13 @@ export default function MainPage() {
 
   const { control, handleSubmit } = useForm<ISearch>({
     mode: "onChange",
-    defaultValues:{
+    defaultValues: {
       // fioiin: '870914302491'
-    }
+    },
   });
 
   const onSubmit: SubmitHandler<ISearch> = ({ fioiin }) => {
-    setPhone("");
+    setPhones([]);
     setIsLoading(true);
     clientInstance.get(`/api/users/by-iin/${fioiin}`).then((res) => {
       const data = res.data;
@@ -53,11 +53,12 @@ export default function MainPage() {
       .then((res) => res.json())
       .then((data) => {
         setIsLoadingPhone(false);
-        if (data[0]?.PhoneNumber !== null) {
-          setPhone(data[0]?.PhoneNumber);
+        if (data.length > 0) {
+          setPhones(data);
         }
       });
   };
+  console.log("phones", phones);
 
   return (
     <div>
@@ -92,7 +93,13 @@ export default function MainPage() {
               {isLoadingPhone ? (
                 <Loader />
               ) : (
-                <div className="pl-14 pt-3 font-bold">{phone}</div>
+                phones.length > 0 &&
+                phones.map((p: any) => (
+                  <div key={p.id} className="mt-3 flex gap-3">
+                    <div>Телефон:</div>
+                    <div className="pl-14 font-bold">{p.phone}</div>
+                  </div>
+                ))
               )}
             </div>
           )

@@ -28,3 +28,11 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+main {
+  background-image: url("/back.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.7); /* белый с 60% прозрачности */
+  background-blend-mode: lighten; /* или multiply/overlay — поэкспериментируй */
+}

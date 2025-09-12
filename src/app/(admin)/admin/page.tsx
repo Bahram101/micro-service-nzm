@@ -5,9 +5,10 @@ import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/ui/Loader";
+import { saveTokenToDb } from "@/app/actions/settings";
 
 type FormValue = {
-  ttt: string;
+  token: string;
 };
 
 const AdminPage = () => {
@@ -24,14 +25,17 @@ const AdminPage = () => {
     }
   }, [user, router]);
 
-  const onSubmit: SubmitHandler<FormValue> = async ({ ttt }: FormValue) => {
+  const onSubmit: SubmitHandler<FormValue> = async ({ token }: FormValue) => {
+    await saveTokenToDb({ token });
+
     await fetch("/api/admin/set-token", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ttt }),
+      body: JSON.stringify({ token }),
       credentials: "include",
     });
-    router.push('/');
+
+    router.push("/");
   };
 
   if (!user) {
@@ -52,7 +56,7 @@ const AdminPage = () => {
           className="mb-4 w-full mr-2"
           placeholder="Заполните поле"
           control={control}
-          name="ttt"
+          name="token"
         />
         <button
           type="submit"

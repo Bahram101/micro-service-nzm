@@ -24,6 +24,9 @@ export default function MainPage() {
 
   const { control, handleSubmit } = useForm<ISearch>({
     mode: "onChange",
+    defaultValues:{
+      // fioiin: '870914302491'
+    }
   });
 
   const onSubmit: SubmitHandler<ISearch> = ({ fioiin }) => {

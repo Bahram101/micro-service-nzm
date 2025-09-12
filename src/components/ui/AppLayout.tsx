@@ -24,7 +24,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <Container>
       <Header />
-      <main className="main p-4 min-h-screen">{children}</main>
+      <main className="main p-4 min-h-screen">
+        <div className='back'>{children}</div>
+      </main>
       <Footer />
     </Container>
   );

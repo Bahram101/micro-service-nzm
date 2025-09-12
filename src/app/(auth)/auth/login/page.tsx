@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { validEmail } from "./email.regex";
 import { useState } from "react";
-import Loader from "@/components/ui/Loader";
+import Loader from "@/components/ui/Loader"; 
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,10 +14,10 @@ export default function LoginPage() {
   const [message, setMessage] = useState("");
   const { handleSubmit, control } = useForm<IAuthFormData>({
     mode: "onChange",
-    defaultValues: {
-      email: "nizam9119@mail.ru",
-      password: "Nizam919191",
-    },
+    // defaultValues: {
+    //   email: "test@test.ru",
+    //   password: "test",
+    // },
   });
 
   const onSubmit: SubmitHandler<IAuthFormData> = async ({

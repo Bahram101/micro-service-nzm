@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { fetchTokenFromDb } from "@/app/actions/settings";
 // import bcrypt from "bcrypt";
 
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
@@ -20,14 +21,20 @@ export async function POST(req: Request) {
       );
     }
 
-    const token = "qwertu";
+    const settings = await fetchTokenFromDb();
 
     const response = NextResponse.json({
       message: "Login successful",
       user: { id: user.id, email: user.email, role: user.role },
     });
+    let tkn = "";
+    if (settings?.token) {
+      tkn = settings.token;
+    } else {
+      tkn = "qwerty";
+    }
 
-    response.cookies.set("token", token, {
+    response.cookies.set("token", tkn, {
       httpOnly: true,
       secure: true,
       sameSite: "strict",

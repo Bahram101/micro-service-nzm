@@ -10,6 +10,10 @@ export function middleware(req: NextRequest) {
     "/auth/forgot-password",
   ];
 
+  // if (pathname.startsWith("/users/create")) {
+  //   return NextResponse.next();
+  // }
+
   if (!token && !publicPaths.includes(pathname)) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }

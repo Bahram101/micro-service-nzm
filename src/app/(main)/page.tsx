@@ -9,7 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 export default function MainPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingPhone, setIsLoadingPhone] = useState(false);
-  const [phones, setPhones] = useState("");
+  const [phones, setPhones] = useState([]);
   const [user, setUser] = useState<{
     id: string;
     lastName: string;

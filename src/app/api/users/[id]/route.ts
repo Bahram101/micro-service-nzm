@@ -1,0 +1,29 @@
+import serverInstance from "@/lib/axios.server";
+import { NextRequest, NextResponse } from "next/server";
+
+// GET /api/users/[id]
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params; 
+  const cacheBuster = Date.now();
+  const token = req.cookies.get("token")?.value;
+
+  if (!token) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const res = await serverInstance.get(
+      `/person/${id}/getPhonesForSite?_=${cacheBuster}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    return NextResponse.json(res.data);
+  } catch (e:any) {
+    return NextResponse.json({ error: "Failed" }, { status: 500 });
+  }
+}
